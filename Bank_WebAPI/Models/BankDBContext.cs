@@ -8,8 +8,9 @@ namespace Bank_WebAPI.Models
         {
 
         }
-        public DbSet<b_user> b_Users { get; set; }
-        public DbSet<b_savings> b_Savings { get; set; }
-        public DbSet<b_transaction> b_Transactions { get; set; }
+        public DbSet<TransferRequest> _TransferRequest { get; set; }
+        public DbSet<DepositRequest> _DepositRequest { get; set; }
+        public DbSet<WithdrawRequest> _WithdrawRequest { get; set; }
+        public DbSet<User> _User { get; set; }
     }
 }

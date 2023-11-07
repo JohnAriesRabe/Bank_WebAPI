@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bank_WebAPI.Migrations
 {
     [DbContext(typeof(BankDBContext))]
-    [Migration("20231106114136_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20231107143346_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,39 +24,68 @@ namespace Bank_WebAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Bank_WebAPI.Models.b_savings", b =>
+            modelBuilder.Entity("Bank_WebAPI.Models.DepositRequest", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(16,2)");
+
+                    b.Property<string>("userID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("id");
 
-                    b.ToTable("b_Savings");
+                    b.ToTable("_DepositRequest");
                 });
 
-            modelBuilder.Entity("Bank_WebAPI.Models.b_transaction", b =>
+            modelBuilder.Entity("Bank_WebAPI.Models.TransferRequest", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(16,2)");
+
+                    b.Property<string>("ReceiverUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("SenderUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("userID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("id");
 
-                    b.ToTable("b_Transactions");
+                    b.ToTable("_TransferRequest");
                 });
 
-            modelBuilder.Entity("Bank_WebAPI.Models.b_user", b =>
+            modelBuilder.Entity("Bank_WebAPI.Models.User", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("decimal(16,2)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("fullName")
                         .IsRequired()
@@ -66,25 +95,33 @@ namespace Bank_WebAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("password_salt")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("pin")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("pin_salt")
+                    b.Property<string>("userID")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("id");
 
-                    b.ToTable("b_Users");
+                    b.ToTable("_User");
+                });
+
+            modelBuilder.Entity("Bank_WebAPI.Models.WithdrawRequest", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(16,2)");
+
+                    b.Property<string>("userID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("_WithdrawRequest");
                 });
 #pragma warning restore 612, 618
         }
